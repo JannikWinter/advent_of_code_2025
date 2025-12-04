@@ -27,14 +27,12 @@ void main() {
       currentPos -= 100;
     }
 
-    print("$line to $currentPos");
-
     if (currentPos == 0) {
       password++;
     }
   }
 
-  print(password);
+  print("Password: $password");
 }
 
 (Direction, int) parse(String line) {
