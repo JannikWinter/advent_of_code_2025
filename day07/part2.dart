@@ -16,21 +16,33 @@ void main() {
       )
       .toList();
 
-  Map<int, int> activeBeamCountsByIndex = {
+  final Map<int, int> activeBeamCountsByIndex = {
     for (int i = 0; i < lines[0].length; i++) i: 0,
     lines.first.indexOf("S"): 1,
   };
 
   for (final Set<int> currentRowSplitterIndices in splitterIndicesByRow) {
     final Map<int, int> previousBeamCounts = Map.from(activeBeamCountsByIndex);
-    final Map<int, int> nextBeamCounts = {};
+    activeBeamCountsByIndex.updateAll((key, value) => 0);
     for (final int beamIndex in previousBeamCounts.keys) {
       if (currentRowSplitterIndices.contains(beamIndex)) {
-        nextBeamCounts[beamIndex] = 0;
+        activeBeamCountsByIndex[beamIndex - 1] =
+            activeBeamCountsByIndex[beamIndex - 1]! +
+            previousBeamCounts[beamIndex]!;
+        activeBeamCountsByIndex[beamIndex + 1] =
+            activeBeamCountsByIndex[beamIndex + 1]! +
+            previousBeamCounts[beamIndex]!;
+        assert(activeBeamCountsByIndex[beamIndex] == 0);
+      } else {
+        activeBeamCountsByIndex[beamIndex] =
+            activeBeamCountsByIndex[beamIndex]! +
+            previousBeamCounts[beamIndex]!;
       }
     }
   }
 
-  final int nTimelines = activeBeamCountsByIndex.length;
+  final int nTimelines = activeBeamCountsByIndex.values.reduce(
+    (value, element) => value + element,
+  );
   print(nTimelines);
 }
