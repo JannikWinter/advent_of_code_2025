@@ -4,6 +4,11 @@ enum Direction { left, right }
 
 void main() {
   final File file = File("./day01/input");
+  final int result = solveDay1Part2(file);
+  print(result);
+}
+
+int solveDay1Part2(File file) {
   final List<String> lines = file.readAsLinesSync();
 
   int nClicks = 0;
@@ -11,7 +16,7 @@ void main() {
   int currentPos = 50;
   int previousPos;
   for (String line in lines) {
-    var (Direction dir, int count) = parse(line);
+    var (Direction dir, int count) = _parse(line);
 
     while (count > 99) {
       count -= 100;
@@ -40,13 +45,13 @@ void main() {
         }
     }
 
-    print("$previousPos + $line -> $currentPos ($nClicks)");
+    // print("$previousPos + $line -> $currentPos ($nClicks)");
   }
 
-  print("Password: $nClicks");
+  return nClicks;
 }
 
-(Direction, int) parse(String line) {
+(Direction, int) _parse(String line) {
   final int count = int.parse(line.substring(1));
   return (line.startsWith("R") ? Direction.right : Direction.left, count);
 }

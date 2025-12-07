@@ -4,6 +4,11 @@ const int nDigits = 12;
 
 void main() {
   final File file = File("./day03/input");
+  final int result = solveDay3Part2(file);
+  print(result);
+}
+
+int solveDay3Part2(File file) {
   final List<String> lines = file.readAsLinesSync();
 
   List<int> resultValues = [];
@@ -15,7 +20,7 @@ void main() {
     int lastDigitIndex = -1;
 
     while (resultDigits.length < nDigits) {
-      final (int largestDigit, int largestDigitIndex) = getLargestJoltage(
+      final (int largestDigit, int largestDigitIndex) = _getLargestJoltage(
         currentBankJoltages,
         start: lastDigitIndex + 1,
         end: bank.length - (nDigits - resultDigits.length) + 1,
@@ -28,11 +33,12 @@ void main() {
   }
 
   final int sum = resultValues.reduce((value, element) => value + element);
-  print(sum);
+
+  return sum;
 }
 
 /// [start] inclusive, [end] exclusive
-(int, int) getLargestJoltage(List<int> joltages, {int? start, int? end}) {
+(int, int) _getLargestJoltage(List<int> joltages, {int? start, int? end}) {
   int largestJoltage = 0;
   int largestJoltageIndex = -1;
 

@@ -4,6 +4,11 @@ typedef BankJoltage = ({int joltage, int firstIndex, int lastIndex});
 
 void main() {
   final File file = File("./day03/input");
+  final int result = solveDay3Part1(file);
+  print(result);
+}
+
+int solveDay3Part1(File file) {
   final List<String> lines = file.readAsLinesSync();
 
   List<int> bankJoltageValues = [];
@@ -34,5 +39,6 @@ void main() {
   }
 
   final int sum = bankJoltageValues.reduce((value, element) => value + element);
-  print(sum);
+
+  return sum;
 }

@@ -2,6 +2,11 @@ import 'dart:io';
 
 void main() {
   final File file = File("./day02/input");
+  final int result = solveDay2Part1(file);
+  print(result);
+}
+
+int solveDay2Part1(File file) {
   final String line = file.readAsStringSync();
   final List<(int, int)> ranges = line.split(",").map((rangeStr) {
     final [start, end] = rangeStr.split("-");
@@ -24,5 +29,5 @@ void main() {
 
   final int sum = invalidValues.reduce((e1, e2) => e1 + e2);
 
-  print(sum);
+  return sum;
 }
